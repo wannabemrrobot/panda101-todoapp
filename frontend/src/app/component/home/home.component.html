@@ -1,0 +1,85 @@
+<nb-layout style="user-select: none;">
+
+<!-- <div class="container" style="padding-right: 0%; padding-bottom: 0%; padding-top: 3%; padding-left: 4%;"> -->
+
+  <nb-layout-header fixed>
+    <h1 class="hey" [routerLink]="''"><span id="panda" style="font-size: 4vmax;">H</span>ey,</h1>
+    <div class="toggle-group">
+      <button nbButton hero shape="round" status="primary" (click)="routeToLogin()">Login</button>&nbsp;&nbsp;
+      <button nbButton shape="round" status="basic" (click)="routeToSignUp()">Sign Up</button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <nb-toggle class="dark-mode-toggle" [checked]="toggleChecked" (checkedChange)="changeTheme($event)" labelPosition="start"><nb-icon icon="sun-outline"></nb-icon></nb-toggle>&nbsp;&nbsp;&nbsp;
+      <nb-icon id="dark-mode-icon" icon="moon-outline"></nb-icon>
+    </div>
+  </nb-layout-header>
+
+  <nb-layout-column style="padding: 0%; padding-left: 3%;">
+    <div class="banner-name">
+      <h1 class="appName">This is <span id="panda" [routerLink]="''">Pända</span>101</h1>
+    </div>
+
+    <div class="page-container">
+      <nb-card class="home-tab">
+        <nb-card-body>
+          <nb-tabset>
+            <nb-tab tabTitle="Know it">
+              <p><nb-icon id="email-icon" icon="hash"></nb-icon><strong> Panda101</strong><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Yeah, I know. It's one of the Task Management apps out there in the market. 
+              But, what makes it special is that it's made using modern UI
+              library on top of the dev community's favourite Angular, which gives you a better productivity tool with awesome user experience.
+              <br><br>Hold on, you can't use an app, just cause it's awful. <b>(Ofcourse, Pandas are beautiful!)</b> 
+              Panda101 has been made with user security in mind, so you get an app which is bug-free and
+              among all, it's been made with Love <3.
+            </p>
+            </nb-tab>
+            <nb-tab tabTitle="Responsible Disclosure">
+                <p>There's no such thing as <b>Flawless.</b>
+                So as this app. Even though I've made this application least prone to bugs, 
+                there may be untraced bugs which may lead to unexpected behaviour. 
+                Whoever finds any security bugs may disclose it, responsibly to us.
+                </p>
+                <br>
+              <nb-card>
+                  <nb-card-body>
+                      <nb-icon id="email-icon" icon="email"></nb-icon><span id="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nullv0id.nullbyte@gmail.com</span>
+                  </nb-card-body>
+              </nb-card>
+  
+            </nb-tab>
+            <nb-tab tabTitle="Wanna Reach Me?">
+              <div class="reachme-container">
+                <nb-card class="reachme-card">
+                  <nb-card-body>
+                      <nb-icon id="email-icon" icon="email-outline"></nb-icon><span id="reachme-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nullv0id.nullbyte@gmail.com</span>
+                  </nb-card-body>
+                </nb-card>
+                <nb-card class="reachme-card">
+                  <nb-card-body>
+                    <nb-icon id="email-icon" icon="github-outline"></nb-icon><span id="reachme-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;github.com/who-is-mr-robot</span>
+                  </nb-card-body>
+                </nb-card>
+                <nb-card class="reachme-card">
+                  <nb-card-body>
+                    <nb-icon id="email-icon" icon="linkedin-outline"></nb-icon><span id="reachme-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linkedin.com/in/diwakar-sivakumar-931008186</span>
+                  </nb-card-body>
+                </nb-card>
+                <nb-card class="reachme-card"> 
+                  <nb-card-body class="reachme-card-body">
+                    <p class="reachme-card-heading">TOTAL <nb-icon icon="calendar-outline" style="color: #3366ff;"></nb-icon> WORKED: <span class="reachme-card-num">37</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL <nb-icon icon="clock-outline" style="color: #3366ff;"></nb-icon> SPENT: <span class="reachme-card-num">148</span></p>
+                  </nb-card-body>
+                </nb-card>  
+              </div>
+            </nb-tab>
+          </nb-tabset>
+        
+        </nb-card-body>
+      </nb-card>
+  
+      <div class="rightsection">
+          <img class="home-image" src="./../../../assets/images/home_dark.png" alt="">
+      </div>
+    </div>
+  </nb-layout-column>
+
+<!-- </div> -->
+</nb-layout>

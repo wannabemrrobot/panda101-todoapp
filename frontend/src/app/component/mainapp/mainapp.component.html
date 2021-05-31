@@ -1,0 +1,490 @@
+<nb-layout>
+
+    <!-- header component -->
+    <nb-layout-header fixed>
+        <app-header 
+          [parentData]="pandaUserData"
+          (searchTerm)="searchTodo($event)"
+          (doHotReload)="hotReload($event)"
+          (autoReload)="setReloadMode($event)"></app-header>
+    </nb-layout-header>
+    
+    <!-- Sidebar Component -->
+    <nb-sidebar style="overflow: hidden; scrollbar-width: none;">
+        <app-sidebar (isTodoAdded)="refreshTodo($event)"></app-sidebar>         
+    </nb-sidebar>
+    
+    <!-- main page -->
+    <nb-layout-column class="colored-column-basic centerPageLayout" style="scrollbar-width: none;">
+
+      <!-- material progressbar -->
+      <div class="progressmaterial-container" *ngIf="displayProgress">
+        <div class="progress-materializecss">
+          <div class="indeterminate"></div>
+        </div>   
+      </div>
+
+      <!-- display text for having tasks -->
+      <div *ngIf="haveTodos" class="top-todo-header">
+
+        <div class="top-todo-greet" *ngIf="!displaySearch">
+          <h6
+            class="todoThingsText" style="font-family: 'Product Sans, sans-serif'; user-select: none;">
+            You've got things to do, <span style="color: #3385ff; font-size: 4vh;">{{pandaUserData.username}}</span>
+          </h6>
+
+          <nb-badge class="pending-badge" style="position: relative;"
+            [text]="todoListPending.length" 
+            status="primary" 
+            position="top end">
+          </nb-badge>
+        </div>
+
+        <!-- display search text -->
+        <div class="top-todo-greet" *ngIf="displaySearch">
+          <h6
+            class="todoThingsText" style="font-family: 'Product Sans, sans-serif'; user-select: none;">
+            Search Results
+          </h6>
+
+          <nb-badge class="search-badge" style="position: relative;"
+            [text]="searchResults.length" 
+            status="primary" 
+            position="top end">
+          </nb-badge>
+
+          <button class="search-close"
+            nbButton (click)="closeSearch()" status="basic" size="small" shape="round">
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- display text with icon if the task list is empty -->
+      <div class="doneAllTodo" *ngIf="!haveTodos" style="height: 53vh;">
+        <nb-icon id="doneAllIcon" [icon]="doneAllQuote.icon"></nb-icon>
+        <br><br>
+        <p>
+          {{doneAllQuote.quote}}
+        </p>
+      </div>
+
+      <!-- svg for the task checkbox and the line -->
+      <svg viewBox="0 0 0 0" style="position: absolute; z-index: -1; opacity: 0;">
+          <defs>
+            <linearGradient id="boxGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="25" y2="25">
+              <stop offset="0%"   stop-color="#3366ff"/>
+              <stop offset="100%" stop-color="#00eeff"/>
+            </linearGradient>
+        
+            <linearGradient id="lineGradient">
+              <stop offset="0%"    stop-color="#3366ff"/>
+              <stop offset="100%"  stop-color="#00eeff"/>
+            </linearGradient>
+        
+            <path id="todo__line" stroke="url(#lineGradient)" d="M21 12.3h255v0.1z"></path>
+            <path id="todo__box" stroke="url(#boxGradient)" d="M21 12.7v5c0 1.3-1 2.3-2.3 2.3H8.3C7 20 6 19 6 17.7V7.3C6 6 7 5 8.3 5h10.4C20 5 21 6 21 7.3v5.4"></path>
+            <path id="todo__check" stroke="url(#boxGradient)" d="M10 13l2 2 5-5"></path>
+            <circle id="todo__circle" cx="13.5" cy="12.5" r="10"></circle>
+          </defs>
+      </svg>
+
+      <div class="searchContainer" *ngIf="displaySearch" style="height: 53vh; overflow: scroll; overflow: -moz-scrollbars-none; overflow-x: hidden; scrollbar-width: none;">
+        
+        <!-- display text with icon if the search list is empty -->
+        <div class="doneAllTodo" *ngIf="noSearchResult" style="height: 53vh;">
+          <nb-icon id="doneAllIcon" icon="search-outline"></nb-icon>
+          <br><br>
+          <p>
+            No Results Found For Your Query!
+          </p>
+        </div>
+
+        <div class="searchResults" *ngIf="!noSearchResult">
+          <div *ngFor="let todo of searchResults">
+            <nb-reveal-card style="margin-bottom: 3px;">
+              <nb-card-front>
+                <nb-card accent="basic">
+                  <nb-card-body>
+                      <label class="todo">
+                          <input class="todo__state" type="checkbox" (change)="changeTodoStatus(todo, $event)" [checked]="todo.completed" [disabled]="preventCompletion"/>
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 25" class="todo__icon">
+                              <!-- <use xlink:href="#todo__line" class="todo__line"></use> -->
+                              <use xlink:href="#todo__box" class="todo__box"></use>
+                              <use xlink:href="#todo__check" class="todo__check"></use>
+                              <use xlink:href="#todo__circle" class="todo__circle"></use>
+                          </svg>
+                          <div class="todo__text" [ngClass]="{'todo__text':!preventCompletion, 'todoTextDisabled':preventCompletion}">{{todo.todo}}</div>  
+                      </label>
+                  </nb-card-body>
+                </nb-card>
+              </nb-card-front>
+              <nb-card-back>
+                <nb-card accent="basic">
+                  <nb-card-body style="display: flex;">
+                      <button nbButton size="tiny">{{todo.date | date}}</button>
+                      <nb-actions size="small">
+                          <nb-action icon="trash-2-outline" 
+                            (click)="deleteTodo(todo)" 
+                            nbTooltip="delete todo"
+                            nbTooltipIcon="alert-circle-outline" 
+                            nbTooltipPlacement="bottom">
+                          </nb-action>
+                          <nb-action icon="edit-2-outline"
+                            (click)="editTodo(todo)" 
+                            nbTooltip="edit todo"
+                            nbTooltipIcon="alert-circle-outline" 
+                            nbTooltipPlacement="bottom"></nb-action>
+                      </nb-actions>
+                      <nb-badge id="priority-badge" [text]="todo.priority" [status]="detectPriority(todo.priority)"></nb-badge>
+                  </nb-card-body>
+                </nb-card>
+              </nb-card-back>
+            </nb-reveal-card>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- main todo container -->
+      <div class="reveal-main" *ngIf="!displaySearch">
+        <!-- tasklist - reveal cards -->
+        <div class="reveal" *ngIf="haveTodos" style="height: 53vh; overflow: scroll; overflow: -moz-scrollbars-none; overflow-x: hidden; scrollbar-width: none;">
+          <div class="revealCard" *ngFor="let todo of pandaUserData.todo.slice().reverse()">
+            <nb-reveal-card *ngIf="!todo.completed && !todo.trashed" style="margin-bottom: 3px;">
+              <nb-card-front>
+                <nb-card accent="basic">
+                  <nb-card-body>
+                      <label class="todo">
+                          <input class="todo__state" type="checkbox" (change)="changeTodoStatus(todo, $event)" [disabled]="preventCompletion"/>
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 25" class="todo__icon">
+                              <use xlink:href="#todo__line" class="todo__line"></use>
+                              <use xlink:href="#todo__box" class="todo__box"></use>
+                              <use xlink:href="#todo__check" class="todo__check"></use>
+                              <use xlink:href="#todo__circle" class="todo__circle"></use>
+                          </svg>
+                          <div class="todo__text" [ngClass]="{'todo__text':!preventCompletion, 'todoTextDisabled':preventCompletion}">{{todo.todo}}</div>  
+                      </label>
+                  </nb-card-body>
+                </nb-card>
+              </nb-card-front>
+              <nb-card-back>
+                <nb-card accent="basic">
+                  <nb-card-body style="display: flex;">
+                      <button nbButton size="tiny">{{todo.date | date}}</button>
+                      <nb-actions size="small">
+                          <nb-action icon="trash-2-outline" 
+                            (click)="deleteTodo(todo)" 
+                            nbTooltip="delete todo"
+                            nbTooltipIcon="alert-circle-outline" 
+                            nbTooltipPlacement="bottom">
+                          </nb-action>
+                          <nb-action icon="edit-2-outline"
+                            (click)="editTodo(todo)" 
+                            nbTooltip="edit todo"
+                            nbTooltipIcon="alert-circle-outline" 
+                            nbTooltipPlacement="bottom"></nb-action>
+                          <nb-action icon="done-all-outline" 
+                            (click)="changeTodoStatus(todo, 'true')"
+                            nbTooltip="mark as completed" 
+                            nbTooltipIcon="checkmark-circle-outline" 
+                            nbTooltipPlacement="bottom">
+                          </nb-action>
+                      </nb-actions>
+                      <nb-badge id="priority-badge" [text]="todo.priority" [status]="detectPriority(todo.priority)"></nb-badge>
+                  </nb-card-body>
+                </nb-card>
+              </nb-card-back>
+            </nb-reveal-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- footer in the middle page -->
+      <nb-card class="footer-layout" 
+        (mouseover)="triggerFooterComment=true"
+        (mouseout)="triggerFooterComment=false" 
+        accent="basic" style="box-shadow: 5px 0px 28px 5px rgba(0, 0, 0, 0.13)">
+          <nb-card-body>
+              
+            <div class="progress-container">
+              <nb-progress-bar [value]="progress" [status]="progressColor" size="tiny" [displayValue]="false"></nb-progress-bar>
+            </div>
+              
+            <div class="progress-details" *ngIf="!triggerFooterComment">
+              <div class="progress-details-grid">
+                <div class="pd-number" [style.color]="progressTextColor" style="font-weight: bold;">
+                  {{progress | number: '.0-0'}}
+                </div>
+                <div class="pd-description">
+                  Progress
+                </div>
+              </div>
+              <div class="progress-details-grid">
+                <div class="pd-number" style="color: #3366ff;">
+                  {{todoListPending.length}}
+                </div>
+                <div class="pd-description">
+                  Pending
+                </div>
+              </div>
+              <div class="progress-details-grid">
+                <div class="pd-number" style="color: #00d68f;">
+                  {{todoListCompleted.length}}
+                </div>
+                <div class="pd-description">
+                  Completed
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-comment" *ngIf="triggerFooterComment">
+              <p style="text-align: center">
+                {{progressComment}}
+              </p>
+            </div>
+
+          </nb-card-body>
+      </nb-card>
+
+    </nb-layout-column>
+
+    <!-- right page -->
+    <nb-layout-column class="colored-column-basic">
+
+      <!-- top row -->
+      <div class="top-row" style="display: flex;">
+        <div class="left-container">
+          <!-- calendar container -->
+          <div class="calendar-container">
+              <button nbButton hero size="small" status="primary" 
+                [nbPopover]="calendarRef" nbPopoverPlacement="bottom">
+                <nb-icon icon="calendar-outline"></nb-icon>
+                Calendar
+              </button>
+              
+              <!-- template for calendar -->
+              <ng-template #calendarRef>
+                  <nb-calendar [dayCellComponent]="customDayCellComponent" [(date)]="calendarSelectedDate" size="medium" style="margin: 0%;"></nb-calendar>
+              </ng-template>
+          </div>
+          <!-- clock container -->
+          <div class="clock-container">
+              <nb-reveal-card class="clock-reveal-card" (mouseenter)="revealClockCard()" (mouseleave)="revealClockCard()" [revealed]="clockReveal" [showToggleButton]="false">
+                  <nb-card-front>
+                    <nb-card status="basic">
+                      <nb-card-header id="clock-reveal-card-header">
+                          <fa-icon id="clock-icon" [icon]="faHourglassStart"></fa-icon>
+                          <div id="clock-text">
+                              {{ rxTime | date: 'hh:mm:ss' }}
+                          </div>
+                      </nb-card-header>
+                    </nb-card>
+                  </nb-card-front>
+                  <nb-card-back>
+                    <nb-card status="primary">
+                      <nb-card-header id="clock-reveal-card-headerBack">
+                          <fa-icon id="clock-iconBack" [icon]="faHourglassStart"></fa-icon>
+                          <div id="clock-textBack">
+                              Time waits for none
+                          </div>
+                      </nb-card-header>
+                    </nb-card>
+                  </nb-card-back>
+                </nb-reveal-card>
+          </div>
+        </div>
+        <!-- weather container  -->
+        <div class="weather-container">
+            <nb-card class="weather-card">
+                <nb-card-body class="weather-card-body">
+                    <div id="weather-icon-container">
+                        <img id="weather-image" src="{{weatherIcon}}" width="50vmax">
+                    </div>
+                    <div id="temp-text">
+                        {{weatherDegree}}°
+                    </div>
+                    <div id="description-text">
+                        {{weatherDescription}}
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <!-- player container -->
+        <div class="player-container">
+    
+          <div class="playerRow">
+    
+            <div class="trash-container">
+              <button nbButton hero size="small" [status]="trashToggleStatus" 
+                (click)="toggleTrash()">
+                <nb-icon icon="trash-2-outline"></nb-icon>
+                Trash
+              </button>
+            </div>
+      
+            <nb-toggle id="dnd-mode-toggle"
+              (checkedChange)="toggleDND($event)" 
+              status="primary"
+              labelPosition="end">
+              <nb-icon icon="volume-off-outline" style="color: rgb(0, 119, 255); transform: translate(0px, 1px);"></nb-icon>
+              <!-- <nb-icon icon="bell-off-outline" style="color: rgb(0, 119, 255);"></nb-icon> -->
+            </nb-toggle>
+    
+          </div>
+    
+          <div class="white-noise-player">
+    
+            <div class="player-button">
+              <button nbButton [disabled]="disableWhiteNoise"
+                hero [status]="whiteNoisePlayColor"
+                (click)="playWhiteNoise()"
+                nbTooltip="Play a mix of ambient and white noise to improve your creativity and concentration!"
+                nbTooltipPlacement="bottom">
+                <fa-icon [icon]="faCanadianMapleLeaf" [style.color]="whiteNoisePlayIconColor" style="font-size: 25px;"></fa-icon>
+              </button>
+              <p id="whiteNoiseStatus">{{whiteNoiseStatus}}</p>
+            </div>
+    
+            <div class="player-selection">
+              <button nbButton hero status="primary" size="small" [disabled]="disableWhiteNoise"
+                [nbPopover]="noiseSelect"
+                nbPopoverPlacement="left">select noise
+              </button>
+              <button id="player-info" [style.border]=""
+                nbButton hero
+                [disabled]="disableWhiteNoise" 
+                status="control" size="small" fullWidth>
+                <fa-icon id="titleIcon" [icon]="whiteNoiseInfoIcon" style="color: #288cff;"></fa-icon>
+                <span class="title">{{whiteNoiseInfo}}</span>
+              </button>
+    
+              <ng-template #noiseSelect>
+                    <nb-select (selectedChange)="selectWhiteNoise($event)"
+                    placeholder="select white noise" hero status="info">
+                      <nb-option value="forest"><fa-icon [icon]="faTree" style="color: #00d68f;"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forest</nb-option>
+                      <nb-option value="rain"><fa-icon [icon]="faTint" style="color: #3366ff;"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rain</nb-option>
+                      <nb-option value="birds"><fa-icon [icon]="faFeather" style="color: #ff3d71;"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Birds</nb-option>
+                      <nb-option value="fire"><fa-icon [icon]="faGripfire" style="color: #ffaa00; font-size: 20px;"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fire</nb-option>
+                    </nb-select>
+              </ng-template>
+    
+            </div>
+          
+          </div>
+        </div>
+      </div>
+  
+      <!-- bottom row -->
+      <!-- completed container  -->
+      <div class="completed-container" *ngIf="!trashToggle">
+          <nb-accordion>
+              <nb-accordion-item collapsed="false">
+      
+                <nb-accordion-item-header class="accordion-header">
+                  <h6 *ngIf="todoListCompleted.length<1" id="todoThingsText" style="font-family: 'Product Sans, sans-serif'; font-weight: 600;">You have no Completed Todos <span style="color: #3385ff; font-size: 4vh;"></span></h6>
+                  <h6 *ngIf="todoListCompleted.length>0" id="todoThingsText" style="font-family: 'Product Sans, sans-serif'; font-weight: 600;">Completion history <span style="color: #3385ff; font-size: 4vh;"></span></h6>
+                  <nb-badge class="completed-badge" [text]="todoListCompleted.length" status="primary" position="top end"></nb-badge>
+                </nb-accordion-item-header>
+      
+                <nb-accordion-item-body class="accordion-body">
+                  <div class="completed-card">
+                      <div class="revealCard" *ngFor="let todo of pandaUserData.todo">
+                        <nb-reveal-card id="completed-card-reveal" *ngIf="todo.completed && !todo.trashed">
+                          <nb-card-front>
+                            <nb-card accent="basic">
+                              <nb-card-body>
+                                  <label class="todo">
+                                      <input class="todo__state" type="checkbox" (change)="changeTodoStatus(todo, $event)" checked  [disabled]="preventCompletion"/>
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 25" class="todo__icon">
+                                          <use xlink:href="#todo__box" class="todo__box"></use>
+                                          <use xlink:href="#todo__check" class="todo__check"></use>
+                                          <!-- <use xlink:href="#todo__circle" class="todo__circle"></use> -->
+                                      </svg>
+                                      <div class="todo__text" [ngClass]="{'todo__text':!preventCompletion, 'todoTextDisabled':preventCompletion}">{{todo.todo}}</div>  
+                                  </label>
+                              </nb-card-body>
+                            </nb-card>
+                          </nb-card-front>
+                          <nb-card-back>
+                            <nb-card accent="basic">
+                              <nb-card-body style="display: flex;">
+                                  <button nbButton size="tiny">{{todo.date | date}}</button>
+                                  <nb-actions size="small">
+                                      <nb-action icon="trash-2-outline" (click)="deleteTodo(todo)" nbTooltip="delete todo" nbTooltipIcon="alert-circle-outline" nbTooltipPlacement="bottom"></nb-action>
+                                      <nb-action icon="close-square-outline" (click)="changeTodoStatus(todo, 'false')" nbTooltip="undo completion" nbTooltipIcon="alert-circle-outline" nbTooltipPlacement="bottom"></nb-action>
+                                  </nb-actions>
+                                  <nb-badge id="priority-badge" [text]="todo.priority" [status]="detectPriority(todo.priority)"></nb-badge>
+            
+                              </nb-card-body>
+                            </nb-card>
+                          </nb-card-back>
+                        </nb-reveal-card>
+                      </div>
+                  </div>
+                </nb-accordion-item-body>
+      
+              </nb-accordion-item>
+          </nb-accordion>
+      </div>
+      <!-- trash container -->
+      <div class="trashed-container" *ngIf="trashToggle">
+        <nb-accordion>
+            <nb-accordion-item collapsed="false">
+    
+              <nb-accordion-item-header class="accordion-header">
+                <h6 *ngIf="todoListTrashed.length==0" id="todoThingsText" style="font-family: 'Product Sans, sans-serif'; font-weight: 600;">You have no trash </h6>
+                <h6 *ngIf="todoListTrashed.length>0" id="todoThingsText" style="font-family: 'Product Sans, sans-serif'; font-weight: 600;">
+                  Trash history
+                </h6>
+                <nb-icon icon="trash-2-outline" style="color: #ff3d71; margin-left: 15px; z-index: 1" 
+                  nbTooltip="Clear Trash" nbTooltipIcon="alert-circle-outline" nbTooltipPlacement="right"
+                  (click)="clearTrash()">
+                </nb-icon>
+                <nb-badge class="completed-badge" [text]="todoListTrashed.length" status="primary" position="top end"></nb-badge>
+              </nb-accordion-item-header>
+    
+              <nb-accordion-item-body class="accordion-body">
+                <div class="completed-card">
+                    <div class="revealCard" *ngFor="let todo of pandaUserData.todo">
+                      <nb-reveal-card id="completed-card-reveal" *ngIf="todo.trashed">
+                        <nb-card-front>
+                          <nb-card accent="basic">
+                            <nb-card-body>
+                                <label class="todo">
+                                    <input class="todo__state" type="checkbox" (change)="changeTodoStatus(todo, $event)" [checked]="todo.completed"  [disabled]="preventCompletion"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 25" class="todo__icon">
+                                        <use xlink:href="#todo__box" class="todo__box"></use>
+                                        <use xlink:href="#todo__check" class="todo__check"></use>
+                                        <!-- <use xlink:href="#todo__circle" class="todo__circle"></use> -->
+                                    </svg>
+                                    <div class="todo__text" [ngClass]="{'todo__text':!preventCompletion, 'todoTextDisabled':preventCompletion}">{{todo.todo}}</div>  
+                                </label>
+                            </nb-card-body>
+                          </nb-card>
+                        </nb-card-front>
+                        <nb-card-back>
+                          <nb-card accent="basic">
+                            <nb-card-body style="display: flex;">
+                                <button nbButton size="tiny">{{todo.date | date}}</button>
+                                <nb-actions size="small">
+                                    <nb-action icon="refresh-outline" (click)="deleteTodo(todo)" nbTooltip="restore todo" nbTooltipIcon="alert-circle-outline" nbTooltipPlacement="bottom"></nb-action>
+                                </nb-actions>
+                                <nb-badge id="priority-badge" [text]="todo.priority" [status]="detectPriority(todo.priority)"></nb-badge>
+          
+                            </nb-card-body>
+                          </nb-card>
+                        </nb-card-back>
+                      </nb-reveal-card>
+                    </div>
+                </div>
+              </nb-accordion-item-body>
+    
+            </nb-accordion-item>
+        </nb-accordion>
+      </div>
+    </nb-layout-column>
+
+</nb-layout>

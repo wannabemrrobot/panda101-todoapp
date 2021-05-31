@@ -1,0 +1,51 @@
+<div class="container">
+
+    <!-- material progressbar -->
+    <div class="progressmaterial-container" *ngIf="displayProgress">
+        <div class="progress-materializecss">
+          <div class="indeterminate"></div>
+        </div>   
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+        <div class="input-container">
+            <div class="input-wrapper">
+                <div class="name-row">
+                    <nb-icon class="name-icon" icon="person-outline"></nb-icon>
+                    <p class="subtitle">People call me as</p>
+                </div>
+                <input class="formControl" 
+                    type="text" 
+                    nbInput fullWidth placeholder="Your good name!" status="primary"
+                    formControlName="username">
+            </div>
+            <div class="input-wrapper">
+                <div class="name-row">
+                    <nb-icon class="name-icon" icon="bookmark-outline"></nb-icon>
+                    <p class="subtitle">Me in parallel universe</p>
+                </div>
+                <input class="formControl" 
+                    type="text" 
+                    nbInput fullWidth placeholder="Give yourself a tag name!" status="primary"
+                    formControlName="tagname">
+            </div>
+            <div class="button-wrapper">
+                <button type="submit" class="buttonClass" 
+                    nbButton hero 
+                    status="success">
+                    <nb-icon class="name-icon" icon="save-outline"></nb-icon>
+                    Save
+                </button>
+                <button class="buttonClass" 
+                    nbButton hero 
+                    status="primary" (click)="triggerLogout()">
+                    <nb-icon class="name-icon" icon="log-out-outline"></nb-icon>
+                    logout
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="image-container">
+        <img class="project-banner" src="./../../../../assets/images/edit-profile.png">
+    </div>
+</div>

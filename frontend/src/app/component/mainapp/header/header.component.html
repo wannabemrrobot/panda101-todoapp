@@ -1,0 +1,63 @@
+<div class="header-container">
+    <!-- app Name -->
+    <h1 id="appName" style="font-family: 'Product Sans, sans-serif';"
+    nbTooltip="My developer is awesome" nbTooltipIcon="heart" nbTooltipPlacement="bottom">
+        <span id="panda">Pända</span>101
+    </h1>
+
+    <!-- search Icon -->
+    <nb-search [type]="searchAnimation"
+        id="searchButton" 
+        nbTooltip="Wanna search something in your tasklist?" 
+        nbTooltipPlacement="bottom" 
+        hint="Enter something you wanna search in todos!">
+    </nb-search>
+    <!-- date button -->
+    <button nbButton hero status="primary" shape="round" id="dateButton"> {{today | date:'fullDate'}}</button>
+
+    <!-- <div class="reloadContainer">
+        <nb-toggle labelPosition="start" status="success" 
+            (checkedChange)="setReloadMode($event)"
+            nbTooltip="Switch between Manual-Batch updation & Auto-Mono-Updation(Beta). Note: Deletion will always be auto updated." nbTooltipPlacement="bottom">
+            <nb-icon icon="save-outline"></nb-icon>
+        </nb-toggle>
+        <nb-icon id="reload-icon" icon="shake-outline"></nb-icon>
+    </div> -->
+
+    <!-- hot reload -->
+    <button nbButton *ngIf="autoReloadButton"
+        status="basic" shape="round" size="small"
+        id="reloadButton"
+        nbTooltip="Did the tasklist stuck, try hot reload!" nbTooltipPlacement="bottom" 
+        (click)="hotReload()">
+        <nb-icon icon="sync-outline"></nb-icon>
+    </button>
+
+    <!-- update -->
+    <!-- <button nbButton hero *ngIf="!autoReloadButton"
+        status="primary" shape="round" size="small"
+        id="reloadButton"
+        (click)="hotReload()">
+        <nb-icon icon="save-outline"></nb-icon> Update
+    </button> -->
+
+    <!-- right Side Group -->
+    <div class="toggle-group">
+
+        <!-- help button -->
+        <button id="helpButton" (click)="openHelp()" nbButton status="info" shape="round" size="small" nbTooltip="Having trouble using the application?" nbTooltipPlacement="bottom"><nb-icon icon="flash-outline"></nb-icon></button>
+
+        <!-- user profile container -->
+        <nb-user id="user-container" (click)="openProfile()"
+            size="large"
+            name="{{parentData.username}}"
+            title="{{parentData.tagname}}"
+            [showTitle]="true"
+            nbTooltip="You are awesome" nbTooltipIcon="heart" nbTooltipPlacement="bottom">
+        </nb-user>
+
+        <!-- dark mode toggle -->
+        <nb-toggle id="dark-mode-toggle" [checked]="toggleChecked" (checkedChange)="changeTheme($event)" labelPosition="start"><nb-icon icon="sun-outline"></nb-icon></nb-toggle>&nbsp;&nbsp;&nbsp;
+        <nb-icon id="dark-mode-icon" icon="moon-outline"></nb-icon>
+    </div>
+</div>

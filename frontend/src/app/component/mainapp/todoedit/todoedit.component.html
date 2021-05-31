@@ -1,0 +1,54 @@
+<nb-card>
+    <nb-card-header class="header"><nb-icon class="icons" icon="edit-outline"></nb-icon>Change of Mind or Change of Plans? Edit your todo.</nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="editTodoForm" (ngSubmit)="submit()">
+            <div class="container">
+                <div class="inputContainer">
+                    <div>
+                        <input type="text" nbInput 
+                        class="formControl"
+                        formControlName="todo"
+                        status="basic"
+                        placeholder="Enter the todo title">
+                    </div>
+                    <div>
+                        <nb-select 
+                        class="formControl"
+                        formControlName="priority" 
+                        placeholder="Select Priority" 
+                        status="{{priorityColor}}" 
+                        (selectedChange)="priorityColorChange($event)">
+                            <nb-option value="1">High</nb-option>
+                            <nb-option value="2">Medium</nb-option>
+                            <nb-option value="3">Low</nb-option>
+                    </nb-select>
+                    </div>
+                    <div>
+                        <input nbInput 
+                        class="formControl"
+                        formControlName="date" 
+                        [nbDatepicker]="datepicker"
+                        placeholder="pick a due date">
+                        <nb-datepicker #datepicker></nb-datepicker>
+                    </div>
+                </div>
+                <div class="inputContainer">
+                    <button nbButton hero
+                        class="formControl"
+                        status="danger" 
+                        (click)="cancel()">
+                        <nb-icon class="icons" icon="close-outline"></nb-icon>
+                        cancel
+                    </button>
+                    <button nbButton hero
+                        class="formControl" 
+                        type="submit" 
+                        status="success">
+                        <nb-icon class="icons" icon="save-outline"></nb-icon>
+                        save
+                    </button>
+                </div> 
+            </div>
+        </form>
+    </nb-card-body>
+  </nb-card>

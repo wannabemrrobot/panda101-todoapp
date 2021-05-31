@@ -1,0 +1,79 @@
+<nb-flip-card [flipped]="quotesFlippedStatus" [showToggleButton]="false" style="padding-top: 0%; padding-bottom: 0%; margin-top: 0%; margin-bottom: 0%;">
+    <nb-card-front>
+      <nb-card>
+        <nb-card-body>
+            <fa-icon [icon]="faQuoteLeft" id="quote"></fa-icon><br>
+            <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{quote}}</i>
+            <br><br>
+            <fa-icon [icon]="faQuoteRight" id="quote" style="display: flex; float: right;"></fa-icon>
+            <br><br>
+            <button nbButton outline status="success" size="small" (click)="getRandomQuote()" style="margin: auto;">Get Motivated<nb-icon icon="charging-outline"></nb-icon></button>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      <nb-card>
+        <nb-card-body style="user-select: none;">
+            <fa-icon [icon]="faQuoteLeft" id="quote" style="user-select: none;"></fa-icon><br>
+            <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{quote}}</i>
+            <br><br>
+            <fa-icon [icon]="faQuoteRight" id="quote" style="display: flex; float: right; user-select: none;"></fa-icon>
+            <br><br>
+            <button nbButton outline status="success" size="small" (click)="getRandomQuote()" style="margin: auto;">Get Motivated<nb-icon icon="charging-outline"></nb-icon></button>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-back>
+  </nb-flip-card>
+
+<div class="newTodo">
+    <form [formGroup]="newTodoForm" (submit)="addNewTodo()">
+        <p style="margin: 0%; margin-top: 0%; margin-bottom: 5%;"><nb-icon icon="bulb-outline" style="color: #19a3ff;"></nb-icon>&nbsp;&nbsp;Wanna add a new ToDo?</p> 
+        <div style="display: flex; margin-bottom: 2vh;">
+            <div class="formIcon" style="margin: auto;">
+                <nb-icon icon="done-all-outline" style="color: #0084ff; margin: auto;"></nb-icon>
+            </div>
+            <div class="inputForm" style="margin: auto;">
+                <input nbInput
+                type="text"
+                formControlName="todo" 
+                status="basic" 
+                fieldSize="small" 
+                placeholder="Enter the todo title">
+            </div>
+        </div>
+        <div style="display: flex; margin-bottom: 2vh;">
+            <div class="formIcon" style="margin: auto;">
+                <nb-icon icon="award-outline" style="color: #0084ff; margin: auto;"></nb-icon>
+            </div>
+            <div class="inputForm" style="margin: auto;">
+                <nb-select 
+                formControlName="priority" 
+                placeholder="Select Priority" 
+                status="{{priorityColor}}" 
+                size="small" 
+                (selectedChange)="priorityColorChange($event)">
+                    <nb-option value="1">High</nb-option>
+                    <nb-option value="2">Medium</nb-option>
+                    <nb-option value="3">Low</nb-option>
+                </nb-select>
+            </div>
+        </div>
+        <div style="display: flex; margin-bottom: 2vh;">
+            <div class="formIcon" style="margin: auto;">
+                <nb-icon icon="calendar-outline" style="color: #0084ff; margin: auto;"></nb-icon>
+            </div>
+            <div class="inputForm" style="margin: auto;">
+                <input nbInput 
+                formControlName="date" 
+                [nbDatepicker]="datepicker" 
+                placeholder="pick a due date" 
+                fieldSize="small">
+                <nb-datepicker #datepicker></nb-datepicker>
+            </div>
+        </div>
+        <div style="display: flex; margin-bottom: 3vh">
+            <button type="submit()" nbButton hero status="primary" size="small" style="margin: auto; float: left;"><nb-icon icon="attach-outline"></nb-icon>Add Todo</button>
+            <button type="reset" nbButton hero status="danger" (click)="resetTodoForm()" size="small" style="float: right;"><nb-icon icon="trash-outline"></nb-icon>&nbsp;Drop</button>
+        </div>
+    </form>
+</div>

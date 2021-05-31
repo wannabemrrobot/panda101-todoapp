@@ -1,0 +1,172 @@
+<nb-layout style="user-select: none;">
+
+    <nb-layout-header fixed>
+        <h1 class="hey" [routerLink]="''"><span id="panda" style="font-size: 4vmax;">H</span>ey,</h1>
+        <div class="toggle-group">
+          <button nbButton hero shape="round" status="primary" (click)="routeToLogin()">Login</button>&nbsp;&nbsp;
+          <button nbButton shape="round" status="basic" (click)="routeToSignUp()">Sign Up</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <nb-toggle class="dark-mode-toggle" [checked]="toggleChecked" (checkedChange)="changeTheme($event)" labelPosition="start"><nb-icon icon="sun-outline"></nb-icon></nb-toggle>&nbsp;&nbsp;&nbsp;
+          <nb-icon id="dark-mode-icon" icon="moon-outline"></nb-icon>
+        </div>
+    </nb-layout-header>
+
+    <nb-layout-column style="padding: 0%; padding-left: 3%;">
+        <div class="banner-name">
+            <h1 class="appName">This is <span id="panda" [routerLink]="''">Pända</span>101</h1>
+        </div>
+
+        <div class="page-container">
+          <nb-flip-card class="cardComponent" [flipped]="flipped" [showToggleButton]="false">
+              <nb-card-front>
+                <nb-card status="basic" accent="primary">
+                  <nb-card-header><nb-icon icon="lock"></nb-icon> &nbsp;&nbsp;&nbsp;&nbsp;Hello, Old Friend</nb-card-header>
+                  
+                  <nb-card-body>  
+                      <nb-stepper #stepper>
+                          <nb-step [stepControl]="firstForm" label="User Name">
+                            <form [formGroup]="firstForm" (ngSubmit)="onFirstLogSubmit()" class="step-container">
+                              <div class="input-group">
+                                <div class="icon-container">
+                                  <nb-icon icon="email-outline"></nb-icon>
+                                </div>
+                                <input nbInput type="text" 
+                                  placeholder="Enter your user mail ID"
+                                  class="form-control" formControlName="username"
+                                  fullWidth shape="rectangle"  
+                                  [status]="this.firstForm.controls['username'].hasError('pattern') ? 'danger' : 'basic'">
+                              </div>
+                              <br>
+                              <!-- <input type="submit" nbButton nbStepperNext status="primary" hero value="next"> -->
+                              <button nbButton type="submit" hero status="primary"><nb-icon icon="arrow-forward"></nb-icon>&nbsp;next</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button nbButton hero status="danger" (click)="stepper.reset()"><nb-icon icon="refresh"></nb-icon>&nbsp;Reset</button>
+                            </form>
+                          </nb-step>
+                          <nb-step [stepControl]="secondForm" label="Password">
+                            <form [formGroup]="secondForm" (ngSubmit)="onSecondLogSubmit()" class="step-container">
+                              <div class="input-group">
+                                <div class="icon-container">
+                                  <fa-icon [icon]="faKey"></fa-icon>
+                                </div>
+                                <input nbInput type="password"
+                                  placeholder="Enter your password"
+                                  class="form-control" formControlName="password"
+                                  fullWidth shape="rectangle"   
+                                  [status]="this.secondForm.controls['password'].hasError('pattern') ? 'danger' : 'basic'">
+                              </div>
+                              <br>
+                              <button class="btn" nbButton nbStepperPrevious status="basic"><nb-icon icon="person-delete"></nb-icon>&nbsp;change Username</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button nbButton type="submit" hero status="primary"><nb-icon icon="log-in"></nb-icon>&nbsp;Login</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button nbButton status="danger" hero (click)="stepper.reset()"><nb-icon icon="refresh"></nb-icon>&nbsp;Reset</button><br><br>
+                              <button nbButton hero status="danger" (click)="openFPwindow()"
+                                nbTooltip="If you're really dumb, well we got you covered! Reset your password." nbTooltipPlacement="bottom"><nb-icon icon="alert-circle-outline"></nb-icon>&nbsp;Forgot Password</button>
+                            </form>
+                          </nb-step>
+                        </nb-stepper>
+      
+                  </nb-card-body>
+                  <!-- <nb-card-footer>Login</nb-card-footer> -->
+                </nb-card>
+              </nb-card-front>
+
+              <!-- stepper card back  -->
+              <nb-card-back>
+                <nb-card status="basic" accent="primary">
+                  <nb-card-header><nb-icon icon="person-add"></nb-icon> &nbsp;&nbsp;&nbsp;&nbsp;Hello, New Friend</nb-card-header>
+                  <nb-card-body>
+                    
+                      <nb-stepper #stepperBack orientation="horizontal" disableStepNavigation>
+                        <nb-step [stepControl]="firstRegForm" label="User Name">
+                          <form [formGroup]="firstRegForm" (ngSubmit)="onFirstRegSubmit()" class="step-container">
+                            <div class="input-group">
+                              <div class="icon-container">
+                                <nb-icon icon="person-outline"></nb-icon>
+                                <br>
+                                <br>
+                                <br>
+                                <nb-icon icon="email-outline"></nb-icon>
+                              </div>
+                              <div class="inputs">
+
+                                <input nbInput 
+                                  type="text" placeholder="Enter your new username"
+                                  class="form-control" formControlName="username" 
+                                  fullWidth shape="rectangle" 
+                                  nbPopover="Username can contain an uppercase, a lowercase, a number and a space (8-20 characters)" 
+                                  nbPopoverTrigger="click" 
+                                  nbPopoverPlacement="end"
+                                  [status]="this.firstRegForm.controls['username'].hasError('pattern') ? 'danger' : 'basic'">&nbsp;
+                                
+                                <input nbInput 
+                                  type="email" placeholder="Enter your email ID"
+                                  class="form-control" formControlName="email"
+                                  fullWidth shape="rectangle"   
+                                  [status]="this.firstRegForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'">
+                              </div>
+
+                            </div>
+                            <br>
+                            <!-- <input type="submit" nbButton nbStepperNext status="primary" hero value="next" [disabled]="!firstRegForm.valid"> -->
+                            <button type="submit" nbButton hero status="primary"><nb-icon icon="arrow-forward"></nb-icon>&nbsp;next</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" nbButton hero status="danger" (click)="stepperBack.reset()"><nb-icon icon="refresh"></nb-icon>&nbsp;Reset</button>
+                          </form>
+                        </nb-step>
+                        <nb-step [stepControl]="secondRegForm" label="Password">
+                          <form [formGroup]="secondRegForm" (ngSubmit)="onSecondRegSubmit()" class="step-container">
+                            <div class="input-group">
+                              <div class="icon-container">
+                                <nb-icon icon="keypad-outline"></nb-icon>
+                                <br>
+                                <br>
+                                <br>
+                                <nb-icon icon="done-all-outline"></nb-icon>
+                              </div>
+                              <div class="inputs">
+
+                                <input nbInput 
+                                  type="password" 
+                                  class="form-control" 
+                                  formControlName="password" 
+                                  fullWidth shape="rectangle" placeholder="Enter your password"
+                                  [status]="this.secondRegForm.controls['password'].hasError('pattern') ? 'danger' : 'basic'"
+                                  nbPopover="Passwords must contain an uppercase, lowercase, special character, number and a character length of between 8 - 20" 
+                                  nbPopoverTrigger="click" 
+                                  nbPopoverPlacement="end">&nbsp;
+                                
+                                <input nbInput
+                                  type="password"
+                                  class="form-control" formControlName="confirmPassword"
+                                  fullWidth shape="rectangle" placeholder="Confirm your password" 
+                                  [status]="this.secondRegForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'basic'">
+                              </div>
+
+                            </div>
+                            <br>
+                            <button class="btn" nbButton nbStepperPrevious status="basic"><nb-icon icon="person-delete"></nb-icon>&nbsp;change Email</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button nbButton type="submit" hero status="primary"><nb-icon icon="person-done-outline"></nb-icon>&nbsp;Sign Up</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button nbButton status="danger" hero (click)="stepperBack.reset()"><nb-icon icon="refresh"></nb-icon>&nbsp;Reset</button><br><br>
+                          </form>
+                        </nb-step>
+                      </nb-stepper>
+      
+                  </nb-card-body>
+                  <!-- <nb-card-footer>Sign Up</nb-card-footer> -->
+                </nb-card>
+              </nb-card-back>
+          </nb-flip-card>
+
+          <!-- material progressbar -->
+          <div class="progressmaterial-container" *ngIf="displayProgress">
+            <div class="progress-materializecss">
+              <div class="indeterminate"></div>
+            </div>   
+          </div>
+
+          <div class="rightsection">
+            <img class="home-image" src="./../../../assets/images/signup1.png" alt="">
+          </div>
+
+        </div>
+    </nb-layout-column>
+
+</nb-layout>

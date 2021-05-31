@@ -1,0 +1,511 @@
+body {
+  user-select: none;
+}
+
+.main-container {
+    margin-top: 0%;
+}
+
+// todo
+.todo {
+  display: block;
+  position: relative;
+  padding: 0 0 0 16%;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.todo:last-child {
+  border-bottom: none;
+}
+.todo__state {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.todo__icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  margin: auto;
+  fill: none;
+  stroke: #3366ff;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.todo__line,
+.todo__box,
+.todo__check {
+  transition: stroke-dashoffset 0.4s cubic-bezier(0.9, 0, 0.5, 1);
+}
+.todo__circle {
+  stroke: #3366ff;
+  stroke-dasharray: 1 6;
+  stroke-width: 0;
+  transform-origin: 13.5px 12.5px;
+  transform: scale(0.4) rotate(0deg);
+  -webkit-animation: none 0.8s linear;
+          animation: none 0.8s linear;
+}
+@-webkit-keyframes explode {
+  30% {
+    stroke-width: 3;
+    stroke-opacity: 1;
+    transform: scale(0.8) rotate(40deg);
+  }
+  100% {
+    stroke-width: 0;
+    stroke-opacity: 0;
+    transform: scale(1.1) rotate(60deg);
+  }
+}
+@keyframes explode {
+  30% {
+    stroke-width: 3;
+    stroke-opacity: 1;
+    transform: scale(0.8) rotate(40deg);
+  }
+  100% {
+    stroke-width: 0;
+    stroke-opacity: 0;
+    transform: scale(1.1) rotate(60deg);
+  }
+}
+.todo__box {
+  stroke-dasharray: 56.1053, 56.1053;
+  stroke-dashoffset: 0;
+  transition-delay: 0.16s;
+  scale: 1;
+}
+.todo__check {
+  stroke: #3366ff;
+  stroke-dasharray: 9.8995, 9.8995;
+  stroke-dashoffset: 9.8995;
+  transition-duration: 0.32s;
+}
+
+.todo__line {
+  stroke-dasharray: 255, 1684;
+  stroke-dashoffset: 255;
+}
+.todo__circle {
+  -webkit-animation-delay: 0.56s;
+          animation-delay: 0.56s;
+  -webkit-animation-duration: 0.56s;
+          animation-duration: 0.56s;
+}
+.todo__state:checked ~ .todo__icon .todo__box {
+  stroke-dashoffset: 56.1053;
+  transition-delay: 0s;
+}
+.todo__state:checked ~ .todo__icon .todo__line {
+  stroke-dashoffset: -8;
+}
+.todo__state:checked ~ .todo__icon .todo__check {
+  stroke-dashoffset: 0;
+  transition-delay: 0.48s;
+}
+.todo__state:checked ~ .todo__icon .todo__circle {
+  -webkit-animation-name: explode;
+          animation-name: explode;
+}
+
+.todoTextDisabled {
+  color: rgb(150, 150, 150);
+}
+
+.centerPageLayout {
+  padding-top: 0vh;
+}
+
+.todoThingsText {
+  margin-top: 0vh;
+  margin-bottom: 4vh;
+}
+
+#quote {
+  color: #3366ff;
+  font-size: 3vh;
+}
+
+.doneAllTodo {
+  text-align: center;
+}
+
+#doneAllIcon {
+  font-size: 8rem;
+  color: #3366ff;
+  margin-top: 2rem;
+}
+
+.weather-container {
+  user-select: none;
+}
+
+.clock-container {
+  user-select: none;
+}
+
+#weather-icon {
+  background: linear-gradient(#0040ff,#00e1ff);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  transform: translate(30px, -50px);
+  user-select: none;
+}
+
+.footer-layout {
+  position: fixed;
+  bottom: 0%;
+  width: 35.5%;
+  height: 15%;
+  left: 23%;
+  transition: 0.2s ease;
+}
+
+.footer-layout:hover {
+  -webkit-transform: scale(1.08);
+  -ms-transform: scale(1.08);
+  transform: scale(1.08);
+  transition: 0.2s ease;
+}
+
+.completed-badge {
+  margin-top: 4px;
+  margin-right: 10%;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 0 !important
+}
+
+#priority-badge {
+  margin-top: 1.1rem;
+  margin-right: 5rem;
+}
+
+.top-todo-greet {
+  display: flex;
+}
+
+.pending-badge {
+  margin: auto;
+  margin-top: 3px;
+  margin-right: 23px;
+}
+
+.search-badge {
+  margin: auto;
+  margin-left: 15px;
+  margin-top: 2px;
+}
+
+.search-close {
+  margin: auto;
+  margin-left: 10px;
+  margin-top: 0;
+  margin-right: 0;
+  transform: translate(0px, -3px);
+}
+
+.progress-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-top: 15px;
+  padding-bottom: 0;
+}
+
+.progress-details-grid {
+  display: flex;
+  margin: auto;
+  margin-bottom: 0;
+
+  .pd-number {
+    font-size: 25px;
+    margin-right: 10px;
+  }
+
+  .pd-description {
+    margin: auto;
+    margin-bottom: 0;
+    padding-top: 1px;
+  }
+}
+
+br, p, h {
+  user-select: none;
+}
+
+// right page css
+// top row
+.left-container {
+  margin-right: 2%;
+}
+
+.calendar-container {
+  margin-top: 2px;
+}
+
+.clock-container {
+  margin-top: 10px;
+}
+
+.clock-reveal-card {
+  width: 100%;
+  height: 12.5vh; 
+  border-radius: 7px;
+
+  #clock-reveal-card-header {
+      font-size: 20px; 
+      padding: 10px; 
+      padding-top: 23px; 
+      padding-bottom: 24px; 
+      width: 100%; 
+      height: 12.5vh;
+  }
+
+  #clock-icon {
+      color: rgba(0, 110, 255, 0.568); 
+      position: absolute; 
+      font-size: 70px; 
+      transform: translate(-10px, -23px);
+  }
+
+  #clock-text {
+      position: absolute; 
+      left: 15%; 
+      z-index: 0; 
+      font-size: 20px;
+  }
+
+  #clock-reveal-card-headerBack {
+      font-size: 15px; 
+      font-weight: 300;
+      padding: 10px; 
+      padding-top: 15px; 
+      padding-bottom: 24px; 
+      width: 100%; 
+      height: 12.5vh;
+  }
+
+  #clock-iconBack {
+      color: rgba(0, 0, 0, 0.438); 
+      position: absolute; 
+      font-size: 20px; 
+      transform: translate(75px, 20px);
+  }
+
+  #clock-textBack {
+      position: absolute; 
+      left: 10%; 
+      top: 15%; 
+      z-index: 0; 
+      font-size: 18px;
+  }
+}
+
+.weather-card {
+  padding: 0%; 
+  margin: 0%; 
+  border-radius: 10px; 
+  overflow: hidden;
+
+  .weather-card-body {
+      padding: 8%; 
+      margin-left: 0%; 
+      overflow: hidden;
+  }
+
+  #weather-icon-container {
+      background: linear-gradient(#0040ff,#00e1ff);
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      transform: translate(30px, -50px);
+  }
+  
+  #weather-image {
+      position: absolute; 
+      top: 38px; 
+      right: 38px;
+  }
+  
+  #temp-text {
+      position: absolute; 
+      bottom: 60px; 
+      left: 10px; 
+      font-size: 5vh;
+  }
+  
+  #description-text {
+      position: absolute; 
+      bottom: 10px; 
+      left: 10px;
+  }
+}
+
+.player-container {
+  margin-top: 2px;
+  margin-left: 9px;
+
+  .playerRow {
+      display: flex;
+  }
+
+  #dnd-mode-toggle {
+      margin-left: 15px;
+  }
+
+  .white-noise-player {
+      display: flex;
+      margin-top: 9px;
+      width: 100px;
+      height: 100px;
+      position: relative
+  }
+
+  #whiteNoiseStatus {
+      font-size: 14px;
+      transform: translate(8px, -10px);
+  }
+
+  .player-selection {
+      margin-left: 10px;
+  }
+
+  #player-info {
+      position: relative;
+      margin-top: 9px;
+      pointer-events: none;
+      overflow: hidden;
+  }
+
+  #titleIcon {
+      position: absolute;
+      opacity: 0.35;
+      font-size: 40px;
+      left: 0;
+  }
+
+
+  .title {
+      z-index: 1;
+  }
+}
+
+#todoThingsText {
+  font-family: 'Product Sans, sans-serif'; 
+  font-weight: 600;
+}
+
+.accordion-header {
+  margin-bottom: 15px;
+}
+
+.accordion-body {
+  padding-right: 5%;
+
+  .completed-card {
+      height: 40vh;
+      overflow: scroll; 
+      overflow: -moz-scrollbars-none; 
+      overflow-x: hidden; 
+      scrollbar-width: none;
+  }
+
+  #completed-card-reveal {
+      margin-bottom: 3px;
+  }
+}
+
+// material progress bar
+
+// IONIC DEFAULT THEME COLORS
+$colors: (
+  primary:    #3366ff,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #00000000,
+  dark:       #222
+);
+
+.progress-materializecss {
+  margin: 5px 0;
+  position: relative;
+  height: 4px;
+  display: block;
+  width: 100%;
+  background-color: ( map-get($colors, primary), 35% );
+  border-radius: 2px;
+  margin: 0.5rem 0 1rem 0;
+  overflow: hidden;
+  .indeterminate {
+    background-color: map-get($colors, primary);
+    &:before{
+      content:          '';
+      position:         absolute;
+      background-color: inherit;
+      top:              0;
+      left:             0;
+      bottom:           0;
+      will-change:      left, right;
+      animation:        indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    }
+    &:after {
+      content:          '';
+      position:         absolute;
+      background-color: inherit;
+      top:              0;
+      left:             0;
+      bottom:           0;
+      will-change:      left, right;
+      animation:        indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+      animation-delay: 1.15s;
+    }
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+  
+.progressmaterial-container{
+  margin: 0;
+  width: 75%;
+  position: absolute;
+  transform: translate(-10px, -25px);
+}
+
+

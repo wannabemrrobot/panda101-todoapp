@@ -1,0 +1,153 @@
+.container {
+    margin: 0%;
+    padding: 0%;
+    display: flex;
+}
+
+span, h1, h2, h3, h4, h5, h6, tabTitle {
+    outline: none;
+}
+
+.page-container {
+    display: flex;
+}
+
+#panda {
+    color: #3366ff;
+    letter-spacing: 2px;
+    font-family: 'Product Sans';
+}
+
+.home-tab {
+    position: relative;
+    max-width: 50vmax;
+}
+
+.rightsection {
+    margin: 0%;
+    padding: 0%;
+    overflow: hidden;
+}
+
+.home-image {
+    width: 50vw;
+    padding: 0%;
+    margin: 0%;
+    transform: translate(0vh, -8vh);
+    pointer-events: none;
+    user-select: none;
+}
+
+.toggle-group {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+#email-icon {
+    color: #3366ff;
+}
+
+.prev-button {
+    margin-right: 1rem;
+}
+
+.cardComponent {
+    width: 50vw;
+}
+
+.icon-container {
+    margin: auto; 
+    margin-left: 0%;
+    margin-right: 15px;
+}
+
+.input-group {
+    display: flex;
+}
+
+// material progress bar
+
+// IONIC DEFAULT THEME COLORS
+$colors: (
+  primary:    #3366ff,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #00000000,
+  dark:       #222
+);
+
+.progress-materializecss {
+  margin: 5px 0;
+  position: relative;
+  height: 4px;
+  display: block;
+  width: 100%;
+  background-color: ( map-get($colors, primary), 35% );
+  border-radius: 2px;
+  margin: 0.5rem 0 1rem 0;
+  overflow: hidden;
+  .indeterminate {
+    background-color: map-get($colors, primary);
+    &:before{
+      content:          '';
+      position:         absolute;
+      background-color: inherit;
+      top:              0;
+      left:             0;
+      bottom:           0;
+      will-change:      left, right;
+      animation:        indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    }
+    &:after {
+      content:          '';
+      position:         absolute;
+      background-color: inherit;
+      top:              0;
+      left:             0;
+      bottom:           0;
+      will-change:      left, right;
+      animation:        indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+      animation-delay: 1.15s;
+    }
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+  
+.progressmaterial-container{
+  margin: 0;
+  width: 48.5%;
+  position: absolute;
+  transform: translate(0px, 48px);
+}
