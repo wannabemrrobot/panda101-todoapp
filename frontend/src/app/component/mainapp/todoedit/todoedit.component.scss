@@ -1,0 +1,17 @@
+.icons {
+    margin-right: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    .inputContainer {
+        display: inline-flex;
+        margin-bottom: 15px;
+    
+        .formControl {
+            margin-right: 10px;
+        }
+    }
+}

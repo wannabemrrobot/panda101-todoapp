@@ -1,0 +1,66 @@
+.header-container {
+    display: flex;
+}
+
+
+#appName {
+    margin: auto;
+    margin-right: 2.5vw;
+
+    #panda {
+        color: #3366ff;
+        letter-spacing: 3px;
+    }
+}
+
+
+#searchButton {
+    margin: auto;
+    margin-right: 3vw;
+}
+
+#dateButton {
+    margin: auto;
+    user-select: none;
+    pointer-events: none;
+}
+
+.reloadContainer {
+  margin-left: 15px;
+  transform: translate(0px, 8px);
+  
+  #reload-icon {
+    margin: 10px;
+    transform: translate(0px, -9px);
+  
+}
+}
+
+#reloadButton {
+  margin: auto;
+  margin-left: 10px;
+}
+
+
+.toggle-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 1.5vw;
+
+    #helpButton {
+        margin-right: 1vw;
+    }
+
+    #user-container {
+        margin-right: 2.5vw;
+    }
+
+}
+
+nb-window {
+    max-height: 85vh;
+    max-width: 70vw;
+    overflow: scroll;
+}

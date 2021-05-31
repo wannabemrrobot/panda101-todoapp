@@ -1,0 +1,79 @@
+.container {
+    margin: 0%;
+    padding: 0%;
+    display: flex;
+}
+
+.tab-link, span, h1, h2, h3, h4, h5, h6, li, ul, link, a {
+    outline: none;
+    text-decoration: none;
+}
+
+.page-container {
+    display: flex;
+}
+
+#panda {
+    color: #3366ff;
+    letter-spacing: 2px;
+    font-family: 'Product Sans', sans-serif;
+}
+
+.home-tab {
+    position: relative;
+    max-width: 50vmax;
+}
+
+.rightsection {
+    margin: 0%;
+    padding: 0%;
+}
+
+.home-image {
+    width: 40vw;
+    padding: 0%;
+    margin: 0%;
+    transform: translate(10vh, -8vh);
+    pointer-events: none;
+    user-select: none;
+}
+
+.toggle-group {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+#email-icon {
+    color: #3366ff;
+}
+
+.reachme-container {
+    .reachme-card {
+        margin-bottom: 5px;
+    }
+
+    .reachme-link {
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #00d68f;
+    }
+
+    // .realme-card-heading {
+        
+    // }
+
+    .reachme-card-body {
+        padding: 0px 75px 0px 75px;
+    }
+
+    .reachme-card-num {
+        font-weight: bold;
+        color: #3366ff;
+        font-size: 20px;
+    }
+}
