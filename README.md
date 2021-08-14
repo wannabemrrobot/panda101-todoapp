@@ -4,7 +4,7 @@ I was searching for a todo app, that has everything from creating todos with dat
 
 you can find my app live, on [panda101](https://panda101todo.web.app).
 
-## Note:
+## Note: 
 The app requires authentic email ID to send user, the verification link. Kindly, don't get annoyed by the username and password character restrictions! :) Happy Productive time...
 
 ## No nitty-gritty BS tech details, but just screenshots!
